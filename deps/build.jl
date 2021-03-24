@@ -45,19 +45,6 @@ These will require rebuilding.
 end
 
 
-if Sys.iswindows() && (!isascii(ROOTENV) || ' ' ∈ ROOTENV)
-    error("""Conda.jl cannot be installed to its default location $(ROOTENV) as
-Miniconda does not support the installation to a directory with a non-ASCII
-character or a space on Windows. The work-around is to install Miniconda to a
-user-writable directory by setting the CONDA_JL_HOME environment
-variable before installing Conda.jl. For example:
-
-ENV["CONDA_JL_HOME"] = "C:\\\\Conda-julia\\\\3"
-
-More information is available at https://github.com/JuliaPy/Conda.jl.
-""")
-end
-
 deps = """
 const ROOTENV = "$(escape_string(ROOTENV))"
 const MINICONDA_VERSION = "$(escape_string(MINICONDA_VERSION))"
