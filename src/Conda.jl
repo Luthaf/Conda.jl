@@ -189,6 +189,22 @@ _quiet() = get(ENV, "CI", "false") == "true" ? `-q` : ``
 "Install miniconda if it hasn't been installed yet; _install_conda(true) installs Conda even if it has already been installed."
 function _install_conda(env::Environment, force::Bool=false)
     if force || !isfile(Conda.conda)
+        if (' ' ∈ PREFIX) || (Sys.iswindows() && !isascii(PREFIX))
+            error("""Conda.jl cannot be installed to its default location $(PREFIX)
+as Miniconda does not support the installation to a directory with a space or a
+non-ASCII character on Windows. The work-around is to install Miniconda to a
+user-writable directory by setting the CONDA_JL_HOME environment variable. For
+example on Windows:
+
+ENV["CONDA_JL_HOME"] = raw"C:\\Conda-Julia\\3"
+using Pkg
+Pkg.build("Conda")
+
+The Julia session need to be restarted. More information is available at
+https://github.com/JuliaPy/Conda.jl.
+""")
+        end
+
         @info("Downloading miniconda installer ...")
         if Sys.isunix()
             installer = joinpath(PREFIX, "installer.sh")
