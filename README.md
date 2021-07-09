@@ -133,6 +133,10 @@ pkg> build Conda
 Also note that you have to use Miniforge for `aarch64-linux-gnu` and
 `aarch64-apple-darwin` platforms as Miniconda is not available for those platforms yet.
 
+## Troubleshooting
+
+In case there is something wrong with Conda configuration, it is possible to clean the installation by deleting the `.julia/conda` directory.
+
 ## Bugs and suggestions
 
 Conda has been tested on Linux, OS X, and Windows.
